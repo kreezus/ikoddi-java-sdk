@@ -59,7 +59,7 @@ add .withApiBaseURL("https://api.staging.ikoddi.com/api/v1/groups/")
 during initialization.*/
 
 //Send SMS
-var smsResponse = ikoddiSMS.sendSMS(List.of("22676467345"), "Ikoddi", "Test message", "", "226", "BF");
+var smsResponse = ikoddiSMS.sendSMS(List.of("226XXXXXXXX"), "Ikoddi", "Test message", "", "226", "BF");
 
 /* sendAirtime methode attributes :
 numbers : List of number to send sms,

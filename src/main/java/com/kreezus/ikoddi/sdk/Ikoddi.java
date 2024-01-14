@@ -199,39 +199,4 @@ public class Ikoddi {
             return new Ikoddi(apiBaseURL, groupId, apiKey, otpAppId);
         }
     }
-
-    public static void main(String[] args) throws Exception {
-        // SMS
-        var ikoddiSMS = Ikoddi
-                .builder()
-                .apiBaseURL("https://api.staging.ikoddi.com/api/v1/groups/")
-                .groupId("10268496")
-                .apiKey("zixVtKzPPjuFp3Bdw3MWLCDxtRTXjWXP")
-                .build();
-        var smsResponse = ikoddiSMS.sendSMS(List.of("22676467345"), "Ikoddi", "Test message", "", "226", "BF");
-        System.out.println("SMS Response : " + smsResponse);
-        var ikoddiOTP = Ikoddi
-                .builder()
-                .apiBaseURL("https://api.staging.ikoddi.com/api/v1/groups/")
-                .groupId("10268496")
-                .apiKey("Zhh4McBGKgsQgT8FGmj1DBNvy4R6IV1t")
-                .otpAppId("clok6631r0000s601khk5dtr8")
-                .build();
-        var smsOTPResponse = ikoddiOTP.sendOTP("22676467345", "sms");
-        System.out.println("OTP Response : " + smsOTPResponse);
-        var smsOTPVerifyResponse = ikoddiOTP.verifyOTP("22676467345", "123456",
-                "o2G3oFb4QdJJTqqrnFE67cJoyEiT3W94xZWklXoGf7rOKTmBN7wi8V8PJKHrbnMybx7IEDTqaVJicMtzd5eRQEG9CkYs02/t5HyFjlioUjtFUan0pUcb0i9RyJeyz3XUkVzLjDo16W3IWRHOfC/lZ4Gdp5E3qgV0Si1i7BqKDKMW8Cdut0VUqKqf06XYvZZH");
-        System.out.println("OTP Verify : " + smsOTPVerifyResponse);
-        // Airtime
-        var ikoddiAirtime = Ikoddi
-                .builder()
-                .apiBaseURL("https://api.staging.ikoddi.com/api/v1/groups/")
-                .groupId("10268496")
-                .apiKey("LffL6sO6BHy5lBXHHrzKz5hn2LRg3tzx")
-                .build();
-        var airtimePlanResponse = ikoddiAirtime.internetPlans();
-        System.out.println("Internet plans Response : " + airtimePlanResponse);
-        var airtimeResponse = ikoddiAirtime.sendAirtime(List.of("22676467345"), "11203", "100", "null", "226", "BF");
-        System.out.println("Airtime Response : " + airtimeResponse);
-    }
 }
