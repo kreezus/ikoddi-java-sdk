@@ -26,15 +26,15 @@ jobs:
 
       - name: Deploy to Maven Central
         env:
-          MAVEN_USERNAME: ${{ MAVEN_USERNAME }}
-          MAVEN_TOKEN: ${{ MAVEN_PASSWORD }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_TOKEN: ${{ secrets.MAVEN_PASSWORD }}
         run: |
           mkdir -p $HOME/.m2
           cat > $HOME/.m2/settings.xml <<EOF
           <settings>
             <servers>
               <server>
-                <id>ossrh</id>
+                <id>central</id>
                 <username>${MAVEN_USERNAME}</username>
                 <password>${MAVEN_TOKEN}</password>
               </server>
