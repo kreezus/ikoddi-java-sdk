@@ -17,17 +17,25 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # 🔧 clé GPG
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}   # 🔧 passphrase
 
-      - name: Set version
+      - name: Set version from Git tag
         run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }}
 
-      - name: Build with Maven
-        run: mvn clean package
+      - name: Import GPG key
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
-      - name: Deploy to Maven Central
+      - name: Build and deploy to Maven Central
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_TOKEN: ${{ secrets.MAVEN_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           mkdir -p $HOME/.m2
           cat > $HOME/.m2/settings.xml <<EOF
@@ -41,4 +49,6 @@ jobs:
             </servers>
           </settings>
           EOF
-          mvn deploy -DskipTests --settings $HOME/.m2/settings.xml -e
+          mvn clean deploy -Prelease -DskipTests \
+            -Dgpg.passphrase="$GPG_PASSPHRASE" \
+            --settings $HOME/.m2/settings.xml -e

@@ -7,8 +7,9 @@
   <packaging>jar</packaging>
   <version>1.0.0</version>
   <name>ikoddi-java-sdk</name>
-  <url>http://maven.apache.org</url>
   <description>Java SDK for interacting with Kreezus platform</description>
+  <url>https://github.com/kreezus/ikoddi-java-sdk</url> <!-- 🔧 MODIF: URL réelle du projet -->
+
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -20,12 +21,20 @@
   <developers>
     <developer>
       <id>kreezus</id>
-      <name>kreezus</name>
+      <name>Kreezus</name>
       <email>contact@kreezus.com</email>
       <organization>Kreezus</organization>
       <organizationUrl>https://kreezus.com</organizationUrl>
     </developer>
   </developers>
+
+  <!-- 🔧 MODIF: SCM obligatoire pour Maven Central -->
+  <scm>
+    <url>https://github.com/kreezus/ikoddi-java-sdk</url>
+    <connection>scm:git:git://github.com/kreezus/ikoddi-java-sdk.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/kreezus/ikoddi-java-sdk.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,38 +55,31 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
-        <plugin>
-          <groupId>org.sonatype.central</groupId>
-          <artifactId>central-publishing-maven-plugin</artifactId>
-          <version>0.8.0</version>
-          <extensions>true</extensions>
-          <configuration>
-            <publishingServerId>central</publishingServerId>
-            <tokenAuth>true</tokenAuth>
-            <autoPublish>true</autoPublish>
-          </configuration>
-        </plugin>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.8.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <tokenAuth>true</tokenAuth>
+          <autoPublish>true</autoPublish>
+        </configuration>
+      </plugin>
     </plugins>
-</build>
+  </build>
 
   <profiles>
     <profile>
       <id>release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.sonatype.central</groupId>
-            <artifactId>central-publishing-maven-plugin</artifactId>
-            <version>0.8.0</version>
-            <extensions>true</extensions>
-            <configuration>
-              <publishingServerId>central</publishingServerId>
-              <tokenAuth>true</tokenAuth>
-              <autoPublish>true</autoPublish>
-            </configuration>
-          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
@@ -92,6 +94,7 @@
               </execution>
             </executions>
           </plugin>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
@@ -105,10 +108,10 @@
               </execution>
             </executions>
             <configuration>
-              <stylesheet>java</stylesheet>
               <doclint>none</doclint>
             </configuration>
           </plugin>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
