@@ -34,7 +34,7 @@ jobs:
           <settings>
             <servers>
               <server>
-                <id>ossrh</id>
+                <id>central</id>
                 <username>${MAVEN_USERNAME}</username>
                 <password>${MAVEN_TOKEN}</password>
               </server>
